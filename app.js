@@ -5,6 +5,10 @@ const ejsMate = require('ejs-mate');
 const path = require('path');
 
 
+
+const houseRoutes = require('./routes/house');
+
+
 mongoose.connect('mongodb://127.0.0.1:27017/StayEase',{
     // useNewUrlParser: true,
     // // useCreateIndex:true,
@@ -35,6 +39,10 @@ app.use(express.urlencoded({extended:true}));
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname,'public')));
 //-------------------------------------------------------------------------------------
+
+
+app.use('/houses',houseRoutes);
+
 
 
 app.get('/',(req,res)=>{

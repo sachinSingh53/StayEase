@@ -1,0 +1,7 @@
+<% layout('layout/boilerplate') %>
+
+<% for(let house of houses){ %>
+   <li><a href="/houses/<%= house._id %>"><%= house.name %></a></li> 
+    
+<% } %>
+
