@@ -1,13 +1,69 @@
 <% layout('layout/boilerplate') %>
 
-<h3>Name: <%= house.name %></h1>
+
+<style>
+  body {
+    background-color: #f8f9fa;
+  }
+  .card {
+    border: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+    border-radius: 15px;
+  }
+  
+  .card-img-top {
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    height: 300px;
+    object-fit: cover;
+  }
+  .card-title {
+    color: #333;
+  }
+  .list-group-item {
+    background-color: transparent;
+    border: none;
+    color: #555;
+  }
+</style>
+
+
+
+<div class="container mb-5">
+<div class="row justify-content-start"> <!-- Aligning the card to the left -->
+  <div class="col-md-6">
+    <div class="card">
+      <img src="<%= house.images %>" class="card-img-top" alt="Item Photo">
+      <div class="card-body">
+        <h5 class="card-title"><%= house.name %></h5>
+        <p class="card-text"><%= house.description %></p>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item"><strong>Price:</strong> <%= house.price %></li>
+            <li class="list-group-item"><strong>Address:</strong> <%= house.address %></li>
+            <li class="list-group-item"><strong>Availability:</strong> <%= house.availability%></li>
+        </ul>
+        <div class="d-flex justify-content-between mt-4">
+
+          <a href="/houses/<%=house.id%>/edit"><button class="btn btn-primary btn-edit">Edit</button></a>
+          <form action="/houses/<%=house.id%>?_method=delete" method="POST">
+            <button class="btn btn-danger btn-delete">delete</button>
+        </form>
+            
+        
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+
+<!-- <h3>Name: <%= house.name %></h1>
 <h3>Address: <%= house.address %></h1>
 <h3>Price: <%= house.price %></h1>
 <h3>Availibility: <%= house.availability %></h1>
 <h3>Description: <%= house.description %></h1>
+<img src="<%= house.images %>" alt=""> -->
 
-<a href="/houses/<%=house.id%>/edit">EDIT</a>
 
-<form action="/houses/<%=house.id%>?_method=delete" method="POST">
-    <button>delete</button>
-</form>

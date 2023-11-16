@@ -6,7 +6,8 @@ const HouseSchema =  new Schema({
     address: String,
     price: Number,
     availability: Number,
-    description: String
+    description: String,
+    images:String
 
 })
 
