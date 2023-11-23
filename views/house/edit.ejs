@@ -45,7 +45,7 @@
 <div class="col-md-10 offset-md-1">
   <div class="form-container">
     <h2>Edit <%= house.name %></h2>
-    <form action="/houses/<%=house._id%>?_method=put"  method="POST">
+    <form action="/houses/<%=house._id%>?_method=put"  method="POST" novalidate class="needs-validation">
       <div class="form-group">
         <label for="houseName">House Name</label>
         <input type="text" class="form-control" id="houseName" placeholder="Enter house name" name="house[name]" value="<%= house.name %>" required>
@@ -68,7 +68,7 @@
       </div>
       <div class="form-group">
         <label for="description">Description</label>
-        <textarea class="form-control" id="description" rows="3" placeholder="Enter description" name="house[description]" ><%= house.description %></textarea>
+        <textarea class="form-control" id="description" rows="3" placeholder="Enter description" name="house[description]" required ><%= house.description %></textarea>
       </div>
       <button type="submit" class="btn btn-primary btn-block mt-4">Submit</button>
     </form>
@@ -76,3 +76,5 @@
 </div>
 </div>
 </div>
+
+<script src="/javascripts/formValidationBootstrap.js"></script>

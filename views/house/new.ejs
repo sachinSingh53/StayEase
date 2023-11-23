@@ -76,7 +76,7 @@
     <div class="col-md-10 offset-md-1">
       <div class="form-container">
         <h2>Add New House</h2>
-        <form action="/houses" method="POST">
+        <form action="/houses" method="POST" novalidate class="needs-validation">
           <div class="form-group">
             <label for="houseName">House Name</label>
             <input type="text" class="form-control" id="houseName" placeholder="Enter house name" name="house[name]" required>
@@ -99,7 +99,7 @@
           </div>
           <div class="form-group">
             <label for="description">Description</label>
-            <textarea class="form-control" id="description" rows="3" placeholder="Enter description" name="house[description]"></textarea>
+            <textarea class="form-control" id="description" rows="3" placeholder="Enter description" name="house[description]" required></textarea>
           </div>
           <button type="submit" class="btn btn-primary btn-block mt-4">Submit</button>
         </form>
@@ -107,4 +107,27 @@
     </div>
   </div>
 </div>
+
+<script src="/javascripts/formValidationBootstrap.js"></script>
+<!-- <script>
+(() => {
+  'use strict'
+
+  // Fetch all the forms we want to apply custom Bootstrap validation styles to
+  const forms = document.querySelectorAll('.needs-validation')
+
+  // Loop over them and prevent submission
+  Array.from(forms).forEach(form => {
+    form.addEventListener('submit', event => {
+      if (!form.checkValidity()) {
+        event.preventDefault()
+        event.stopPropagation()
+      }
+
+      form.classList.add('was-validated')
+    }, false)
+  })
+})()
+</script> -->
+
 
