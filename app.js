@@ -9,6 +9,7 @@ const ExpressError = require('./utilities/expressError');
 
 
 const houseRoutes = require('./routes/house');
+const reviewRoutes = require('./routes/review');
 
 
 mongoose.connect('mongodb://127.0.0.1:27017/StayEase',{
@@ -38,6 +39,7 @@ app.use(express.static(path.join(__dirname,'public')));
 
 
 app.use('/houses',houseRoutes);
+app.use('/houses/:id/reviews',reviewRoutes);
 
 app.get('/',(req,res)=>{
     res.render('home');

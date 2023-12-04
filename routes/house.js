@@ -34,7 +34,7 @@ router.post('/',validateHouse,catchAsync(async(req,res)=>{
 
 router.get('/:id',catchAsync(async(req,res)=>{
 
-    const house = await House.findById(req.params.id);
+    const house = await House.findById(req.params.id).populate('reviews');
     res.render("house/show",{house});
 }))
 
