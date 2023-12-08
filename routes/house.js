@@ -16,6 +16,7 @@ router.get('/',catchAsync(async(req,res)=>{
 
 //---------------------Create-------------------------------
 router.get('/new',(req,res)=>{
+    
     res.render('house/new');
 })
 
@@ -26,6 +27,7 @@ router.post('/',validateHouse,catchAsync(async(req,res)=>{
     const house = new House(req.body.house);
     // console.log(house);
     await house.save();
+    req.flash('success','Successfully Created New House!');
     res.redirect('/houses');
 }));
 
@@ -52,6 +54,7 @@ router.put('/:id',catchAsync(async(req,res)=>{
     const {id} = req.params;
     const house =  await House.findByIdAndUpdate(id,{...req.body.house});
     house.save();
+    req.flash('success',`Successfully Updated!`)
     res.redirect(`/houses/${id}`);
 }))
 
@@ -62,6 +65,7 @@ router.delete('/:id',catchAsync(async(req,res)=>{
 
     const {id} = req.params;
     await House.findByIdAndDelete(id);
+    req.flash('success','Sussessfully Deleted House!');
     res.redirect('/houses',);
 }))
 

@@ -4,8 +4,8 @@ const methodOverride = require('method-override');
 const ejsMate = require('ejs-mate');
 const path = require('path');
 const ExpressError = require('./utilities/expressError');
-
-
+const session = require('express-session');
+const flash = require('connect-flash');
 
 
 const houseRoutes = require('./routes/house');
@@ -36,6 +36,35 @@ app.use(express.urlencoded({extended:true}));
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname,'public')));
 //-------------------------------------------------------------------------------------
+
+
+//-------------------------session configuration------------------------------------------
+const sessionConfig = {
+    
+    secret:'thisismysecret',
+    resave: false,
+
+    saveUninitialized:true,
+    cookie:{
+        httpOnly:true,
+        expires:Date.now()*1000*60*60*24*7,
+        maxAge:1000*60*60*24*7
+    }
+
+}
+app.use(session(sessionConfig));
+app.use(flash());
+//----------------------------------------------------------------------------------------
+
+
+
+
+//---------res.local(middleware to provide storage for every response)--------------------
+app.use((req,res,next)=>{
+    res.locals.success = req.flash('success');
+    res.locals.error = req.flash('error');
+    next();
+})
 
 
 app.use('/houses',houseRoutes);
