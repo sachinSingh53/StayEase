@@ -16,7 +16,18 @@
             <a class="nav-link" href="/houses">All Houses</a>
           </li>
         </ul>
-       
+
+        <% if(!currentUser){ %>
+
+        <span class="navbar-text ">
+          <!-- Navbar text with an inline element -->
+          <a href="/login"><button type="button" class="btn btn-outline-success btn-sm mx-2">Login/SignUp</button></a>
+        </span>
+        <% }else{ %>
+        <span class="nav-item">
+          <a href="/logout"><button type="button" class="btn btn-outline-danger btn-sm mx-2">Logout</button></a>
+        </span>
+        <% } %>
         
       </div>
     </div>

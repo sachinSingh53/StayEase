@@ -4,7 +4,7 @@ const House = require('../models/house');
 const catchAsync=require('../utilities/catchAsync');
 const Joi = require('joi');
 const ExpressError = require('../utilities/expressError');
-const { validateHouse } = require('../middlewares');
+const { validateHouse, isLoggedIn } = require('../middlewares');
 
 
 //-----------------index----------------------------------
@@ -15,12 +15,12 @@ router.get('/',catchAsync(async(req,res)=>{
 }))
 
 //---------------------Create-------------------------------
-router.get('/new',(req,res)=>{
+router.get('/new',isLoggedIn,(req,res)=>{
     
     res.render('house/new');
 })
 
-router.post('/',validateHouse,catchAsync(async(req,res)=>{
+router.post('/',isLoggedIn,validateHouse,catchAsync(async(req,res)=>{
     
     
 
@@ -43,14 +43,14 @@ router.get('/:id',catchAsync(async(req,res)=>{
 
 //-----------------------Update-------------------------------
 
-router.get('/:id/edit',catchAsync(async(req,res)=>{
+router.get('/:id/edit',isLoggedIn,catchAsync(async(req,res)=>{
     const house = await House.findById(req.params.id);
     // console.log(house);
     res.render('house/edit',{house});
 }))
 
 
-router.put('/:id',catchAsync(async(req,res)=>{
+router.put('/:id',isLoggedIn,catchAsync(async(req,res)=>{
     const {id} = req.params;
     const house =  await House.findByIdAndUpdate(id,{...req.body.house});
     house.save();
@@ -61,7 +61,7 @@ router.put('/:id',catchAsync(async(req,res)=>{
 
 //---------------------Delete-----------------------------------
 
-router.delete('/:id',catchAsync(async(req,res)=>{
+router.delete('/:id',isLoggedIn,catchAsync(async(req,res)=>{
 
     const {id} = req.params;
     await House.findByIdAndDelete(id);
