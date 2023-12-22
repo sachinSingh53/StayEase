@@ -1,55 +1,6 @@
 <% layout('layout/boilerplate') %>
 
-<style>
-   body {
-     background-color: #f8f9fa;
-   }
-   .house-card {
-     border: none;
-     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-     transition: transform 0.3s, box-shadow 0.3s;
-     border-radius: 15px;
-     margin-bottom: 20px;
-   }
-   .house-card:hover {
-     transform: translateY(-5px) scale(1.05);
-     box-shadow: 0 20px 40px -14px rgba(0, 0, 0, 0.4);
-   }
-   .card-img-top {
-     border-top-left-radius: 15px;
-     border-top-right-radius: 15px;
-     height: 200px; /* Adjust the height as needed */
-     object-fit: cover; /* Ensures the image covers the container */
-     width: 100%; /* Ensures the image fills the container */
-   }
-   .card-title {
-     color: #333;
-     font-weight: bold;
-   }
-   .list-group-item {
-     background-color: transparent;
-     border: none;
-     color: #555;
-   }
-   .btn-view {
-     background-color: transparent;
-     border: none;
-     border-radius: 25px;
-     transition: background-color 0.3s, color 0.3s;
-     display: block;
-     width: 60%;
-     margin: 0 auto;
-     text-align: center;
-     padding: 6px 0;
-     color: #007bff;
-     text-decoration: none;
-     font-size: 14px;
-   }
-   .btn-view:hover {
-     background-color: #007bff;
-     color: #fff;
-   }
- </style>
+<link rel="stylesheet" href="/stylesheets/indexPage.css">
 
 <h1 class="text-center mt-4 mb-5">Welcome to House Listings</h1>
 <div class="container mt-5">

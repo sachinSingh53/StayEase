@@ -25,6 +25,7 @@ router.post('/',isLoggedIn,validateHouse,catchAsync(async(req,res)=>{
     
 
     const house = new House(req.body.house);
+    house.author = req.user._id;
     // console.log(house);
     await house.save();
     req.flash('success','Successfully Created New House!');
@@ -36,7 +37,9 @@ router.post('/',isLoggedIn,validateHouse,catchAsync(async(req,res)=>{
 
 router.get('/:id',catchAsync(async(req,res)=>{
 
-    const house = await House.findById(req.params.id).populate('reviews');
+    const house = await House.findById(req.params.id).populate('reviews').populate('author');
+
+    // console.log(house);
     res.render("house/show",{house});
 }))
 

@@ -10,6 +10,11 @@ const HouseSchema =  new Schema({
     description: String,
     images:String,
 
+    author:{
+        type: Schema.Types.ObjectId,
+        ref:'User'
+    },
+
     reviews:[
         {
             type: Schema.Types.ObjectId,

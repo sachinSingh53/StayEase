@@ -15,7 +15,7 @@ router.post('/register',async(req,res)=>{
         const user =  new User({email,username})
         const registeredUser =  await User.register(user,password);
 
-        //without this You have to logged in again after signUp
+        //without this You have to logIn again after signUp
         req.login(registeredUser,err=>{
             if(err) return next(err);
             req.flash('success','Welcome to yelp-camp!');
