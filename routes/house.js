@@ -4,7 +4,7 @@ const House = require('../models/house');
 const catchAsync=require('../utilities/catchAsync');
 const Joi = require('joi');
 const ExpressError = require('../utilities/expressError');
-const { validateHouse, isLoggedIn } = require('../middlewares');
+const { validateHouse, isLoggedIn, isAuthor } = require('../middlewares');
 
 
 //-----------------index----------------------------------
@@ -37,7 +37,12 @@ router.post('/',isLoggedIn,validateHouse,catchAsync(async(req,res)=>{
 
 router.get('/:id',catchAsync(async(req,res)=>{
 
-    const house = await House.findById(req.params.id).populate('reviews').populate('author');
+    const house = await House.findById(req.params.id).populate({
+        path: 'reviews',
+        populate:{
+            path: 'author'
+        }
+    }).populate('author');
 
     // console.log(house);
     res.render("house/show",{house});
@@ -46,17 +51,17 @@ router.get('/:id',catchAsync(async(req,res)=>{
 
 //-----------------------Update-------------------------------
 
-router.get('/:id/edit',isLoggedIn,catchAsync(async(req,res)=>{
+router.get('/:id/edit',isLoggedIn,isAuthor,catchAsync(async(req,res)=>{
     const house = await House.findById(req.params.id);
     // console.log(house);
     res.render('house/edit',{house});
 }))
 
 
-router.put('/:id',isLoggedIn,catchAsync(async(req,res)=>{
-    const {id} = req.params;
-    const house =  await House.findByIdAndUpdate(id,{...req.body.house});
-    house.save();
+router.put('/:id',isLoggedIn,isAuthor,catchAsync(async(req,res)=>{
+    
+    const houseEdit =  await House.findByIdAndUpdate(id,{...req.body.house});
+    houseEdit.save();
     req.flash('success',`Successfully Updated!`)
     res.redirect(`/houses/${id}`);
 }))
@@ -64,7 +69,7 @@ router.put('/:id',isLoggedIn,catchAsync(async(req,res)=>{
 
 //---------------------Delete-----------------------------------
 
-router.delete('/:id',isLoggedIn,catchAsync(async(req,res)=>{
+router.delete('/:id',isLoggedIn,isAuthor,catchAsync(async(req,res)=>{
 
     const {id} = req.params;
     await House.findByIdAndDelete(id);

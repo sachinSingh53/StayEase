@@ -7,15 +7,18 @@ const Joi = require('joi');
 const ExpressError = require('../utilities/expressError');
 const review = require('../models/review');
 const { findById } = require('../models/house');
-const {isLoggedIn } = require('../middlewares');
+const {isLoggedIn,isReviewAuthor } = require('../middlewares');
 
 
 
 router.post('/',isLoggedIn,catchAsync(async(req,res)=>{
     // console.log(req.body.review);
     const review = new Review(req.body.review);
+    review.author = req.user._id;
     const house = await House.findById(req.params.id);
     house.reviews.push(review);
+    console.log(review);
+    
 
     await review.save();
     await house.save();
@@ -25,7 +28,7 @@ router.post('/',isLoggedIn,catchAsync(async(req,res)=>{
     res.redirect(`/houses/${house._id}`);
 }));
 
-router.delete('/:reviewId',isLoggedIn,catchAsync(async(req,res)=>{
+router.delete('/:reviewId',isLoggedIn,isReviewAuthor,catchAsync(async(req,res)=>{
     const {id,reviewId} = req.params;
     await House.findByIdAndUpdate(id,{$pull:{reviews:reviewId}});
     await Review.findByIdAndDelete(reviewId);
