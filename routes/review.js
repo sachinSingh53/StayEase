@@ -17,7 +17,7 @@ router.post('/',isLoggedIn,catchAsync(async(req,res)=>{
     review.author = req.user._id;
     const house = await House.findById(req.params.id);
     house.reviews.push(review);
-    console.log(review);
+    // console.log(review);
     
 
     await review.save();
