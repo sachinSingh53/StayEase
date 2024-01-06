@@ -8,7 +8,10 @@ const HouseSchema =  new Schema({
     price: Number,
     availability: Number,
     description: String,
-    images:String,
+    images:[{
+        url: String,
+        filename: String
+    }],
 
     author:{
         type: Schema.Types.ObjectId,

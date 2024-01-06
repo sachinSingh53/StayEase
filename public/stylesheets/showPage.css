@@ -338,3 +338,40 @@ section {
 .sq_box span.wishlist i:hover {
     color: #fd7f34;
 }
+.scrollable-div {
+    /* Set a fixed height for the div to make it scrollable */
+    max-height: 600px; /* Change the height as needed */
+    /* Add a scrollbar only when the content overflows */
+    overflow: auto;
+}
+.upload-container {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: center;
+    z-index: 9999;
+  }
+
+  .close-btn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    cursor: pointer;
+    color: #999;
+  }
+
+  .selected-files img {
+    margin: 5px;
+    max-width: 100px;
+    max-height: 100px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 5px;
+    box-sizing: border-box;
+  }

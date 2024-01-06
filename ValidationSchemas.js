@@ -5,7 +5,7 @@ module.exports.houseSchemaValidation=Joi.object({
         address: Joi.string().required(),
         price: Joi.number().required().min(0),
         availability: Joi.number().required().min(0),
-        images: Joi.string().required(),
+        // images: Joi.string().required(),
         description: Joi.string().required()
     }).required()
 });

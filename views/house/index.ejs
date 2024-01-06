@@ -8,7 +8,11 @@
      <% houses.forEach(house => { %>
        <div class="col-md-4">
          <div class="card house-card">
-           <img src="<%= house.images %>" class="card-img-top" alt="House Photo">
+          <% if(house.images.length){ %>
+           <img src="<%= house.images[0].url %>" class="card-img-top" alt="House Photo">
+          <% }else{ %>
+            <img src="https://static.vecteezy.com/system/resources/thumbnails/008/075/444/small/the-logo-of-home-housing-residents-real-estate-with-a-concept-that-presents-rural-nature-with-a-touch-of-leaves-and-sunflowers-vector.jpg" class="card-img-top" alt="House Photo">
+          <% } %>
            <div class="card-body">
              <h5 class="card-title mb-3"><%= house.title %></h5>
              <ul class="list-group list-group-flush">
