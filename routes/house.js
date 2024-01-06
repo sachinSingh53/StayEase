@@ -9,7 +9,7 @@ const storage = require('../cloudinary/index');
 const { validateHouse, isLoggedIn, isAuthor } = require('../middlewares');
 const upload = multer(storage);
 
-const {cloudinary} = require('../cloudinary/index');
+const {cloudinary} = require('../cloudinary');
 
 
 //-----------------index----------------------------------
@@ -108,10 +108,12 @@ router.put('/:id/addImages',isLoggedIn,isAuthor,upload.array('images'),catchAsyn
 router.delete('/:id/deleteImages',isLoggedIn,isAuthor,catchAsync(async(req,res)=>{
     const {id} = req.params;
     const house = await House.findById(id);
-    
     if(req.body.deleteImages){
+        
+        // console.log(req.body.deleteImages);
         for (let filename of req.body.deleteImages) {
            await cloudinary.uploader.destroy (filename);
+        //    console.log(filename);
         }
        await house.updateOne({$pull:{images:{filename:{$in: req.body.deleteImages}}}});
     }
