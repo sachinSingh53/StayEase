@@ -10,6 +10,11 @@ const { validateHouse, isLoggedIn, isAuthor } = require('../middlewares');
 const upload = multer(storage);
 
 const {cloudinary} = require('../cloudinary');
+const mbxGeocoding= require('@mapbox/mapbox-sdk/services/geocoding');
+
+const mapboxToken = process.env.MAPBOX_TOKEN;
+
+const geocoder = mbxGeocoding({accessToken:mapboxToken});
 
 
 //-----------------index----------------------------------
@@ -27,19 +32,22 @@ router.get('/new',isLoggedIn,(req,res)=>{
 
 router.post('/',isLoggedIn,upload.array('house[images]'),validateHouse,catchAsync(async(req,res)=>{
     
-    
-
+    //forward geocoding the location the user entered and convert it into geojson
+   const geodata =  await geocoder.forwardGeocode({
+        query:req.body.house.address,
+        limit:1
+    }).send();
     const house = new House(req.body.house);
     house.author = req.user._id;
+    house.geometry = geodata.body.features[0].geometry;
     house.images = req.files.map(f=>({url: f.path, filename: f.filename}));
-    console.log(house);
+    // console.log(house);
     // console.log(req.files);
 
     await house.save();
     req.flash('success','Successfully Created New House!');
     res.redirect('/houses');
 }));
-
 
 //-----------------------Read-------------------------------
 
