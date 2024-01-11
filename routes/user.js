@@ -6,7 +6,7 @@ const {storeReturnTo} = require('../middlewares');
 
 //----------------------------------SignUp------------------------------------
 router.get('/register',(req,res)=>{
-    res.render('user/loginRegister');
+    res.render('user/register');
 
 })
 router.post('/register',async(req,res)=>{
@@ -19,7 +19,7 @@ router.post('/register',async(req,res)=>{
         req.login(registeredUser,err=>{
             if(err) return next(err);
             req.flash('success','Welcome to yelp-camp!');
-            res.redirect('/houses');
+            res.redirect('/');
         })
         
     }catch(e){
@@ -34,13 +34,13 @@ router.post('/register',async(req,res)=>{
 
 //-------------------------------Login------------------------------------------
 router.get('/login',(req,res)=>{
-    res.render('user/loginRegister');
+    res.render('user/login');
 })
 
 router.post('/login',storeReturnTo,passport.authenticate('local', { failureRedirect: '/login', failureFlash: true }),(req,res)=>{
     req.flash('success','Welcome Back!');
 
-    const redirectUrl = res.locals.returnTo||'/houses';
+    const redirectUrl = res.locals.returnTo||'/';
     
     res.redirect(redirectUrl);
    

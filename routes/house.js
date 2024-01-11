@@ -27,7 +27,7 @@ router.get('/',catchAsync(async(req,res)=>{
 
 //---------------------Create-------------------------------
 router.get('/new',isLoggedIn,(req,res)=>{
-    
+
     res.render('house/new');
 })
 
@@ -147,26 +147,27 @@ router.post('/findbylocation',catchAsync(async(req,res)=>{
         limit:1
     }).send();
 
-    // console.log( geodata.body.features[0].geometry.coordinates[0]);
 
    const longitude =  geodata.body.features[0].geometry.coordinates[0];
    const latitude = geodata.body.features[0].geometry.coordinates[1];
     
-    console.log(geodata.body.features[0].geometry.coordinates);
+
     const houses = await House.aggregate([
         {
           $geoNear: {
             near: { type: "Point", coordinates: [parseFloat(longitude),parseInt(latitude)] },
             key: "geometry",
-            maxDistance: parseInt(50)*1609, // Max distance in meters (assuming the distance is in miles)
+            maxDistance: parseInt(50*1609), // Max distance in meters (assuming the distance is in miles)
             distanceField: "dist.calculated",
             spherical: true
           }
         }
       ]);
+
+      
     
-    // console.log(houses);
-    res.render('house/index',{houses});
+
+    res.render('home',{houses,formSubmitted:true});
     // res.redirect('/houses');
 }));
 

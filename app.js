@@ -97,7 +97,7 @@ app.use('/houses/:id/reviews',reviewRoutes);
 app.use('/',userRoutes);
 
 app.get('/',(req,res)=>{
-    res.render('home');
+    res.render('home',{formSubmitted: false});
 })
 
 app.all('*',(req,res,next)=>{
@@ -107,7 +107,7 @@ app.all('*',(req,res,next)=>{
 //------------------------------------Error Handler--------------------------------------------------
 app.use((err,req,res,next)=>{
     const {statusCode = 500}=err;
-    if(!err.message) err.message="Oh No, Something Went Wrong"
+    if(!err.message) err.message="Oh No, Something Went Wrong";
     res.status(statusCode).render('error',{err});
 })
 
