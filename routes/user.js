@@ -2,7 +2,8 @@ const express = require('express');
 const router = express.Router();
 const User = require('../models/user');
 const passport = require('passport');
-const {storeReturnTo} = require('../middlewares');
+const {storeReturnTo, isLoggedIn} = require('../middlewares');
+const catchAsync=require('../utilities/catchAsync');
 
 //----------------------------------SignUp------------------------------------
 router.get('/register',(req,res)=>{
@@ -62,6 +63,32 @@ router.get('/logout', (req, res, next) => {
     });
 });
 //------------------------------------------------------------------------------
+
+
+
+//-------------------------------change password--------------------------------
+router.get('/resetPassword',(req,res)=>{
+    res.render('user/resetPassword');
+})
+
+router.post('/resetPassword',catchAsync(async(req,res)=>{
+    const user = await User.findOne({email: req.body.email});
+    if(user===null){
+        req.flash('error','user not found!!');
+        return res.redirect('/resetPassword');
+    }
+    const newPassword = req.body.password;
+    const confirmPassword = req.body.confirmpassword;
+    if(newPassword!=confirmPassword){
+        req.flash('error','password does not match!!');
+        res.redirect('/resetPassword');
+    }
+    // console.log(req.body,user);
+    await user.setPassword(newPassword)
+    await user.save();
+    req.flash('success','Password Updated!');
+    res.redirect('/login');
+}))
 
 
 module.exports = router;
