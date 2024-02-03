@@ -11,13 +11,11 @@ router.route('/register')
     .get(userController.registerForm)
     .post(userController.register)
 
-
 router.route('/login')
     .get(userController.loginForm)
     .post(storeReturnTo,passport.authenticate('local', { failureRedirect: '/login', failureFlash: true }),userController.login);
 
 router.get('/logout', userController.logout);
-
 
 router.route('/resetPassword')
     .get(userController.changePasswordForm)
