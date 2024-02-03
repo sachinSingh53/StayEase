@@ -1,0 +1,37 @@
+version: '3.9'
+
+services:
+  mongo_db:
+    container_name: db_container_stayease
+    image: mongo:latest
+    restart: always
+    ports:
+      - 2717:27017
+    volumes:
+      - mongo_db:/data/db
+
+  redis:
+    image: redis
+    
+    
+    
+  api:
+    build: .
+    ports:
+      - 3000:3000
+    volumes:
+      - .:/user/src/app
+    environment:
+      CLOUDINARY_CLOUD_NAME: dzp4ziyue
+      CLOUDINARY_KEY: 491168893643126
+      CLOUDINARY_SECRET: hWDslDG__M4kXuWOiyD6EEcT6Nc
+      MAPBOX_TOKEN: pk.eyJ1Ijoic2FjaGluNTMiLCJhIjoiY2xteDhycmIyMDd3MDJrcXkzcGhjbTBpcCJ9.mPeSSH07Ft3gwK59uwYjMA
+      GOOGLE_CLIENT_ID: 176726329187-8vppverausfkc6lnmam96b2riue17kg4.apps.googleusercontent.com
+      GOOGLE_CLIENT_SECRET: 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
+    depends_on:
+      - mongo_db
+      - redis
+      
+
+volumes:
+  mongo_db: {}

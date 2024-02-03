@@ -19,11 +19,14 @@ const reviewRoutes = require('./routes/review');
 const userRoutes = require('./routes/user');
 
 //------------------------------mongoose Connection-------------------------------
-mongoose.connect('mongodb://127.0.0.1:27017/StayEase',{
+//change this url to local host url if you are using it outside the container of docker
+mongoose.connect('mongodb://mongo_db:27017/StayEase',{
     // useNewUrlParser: true,
     // // useCreateIndex:true,
     // useUnifiedTopology:true
 });
+
+
 
 const db = mongoose.connection;
 db.on("error",console.error.bind(console,"connection error:"));
@@ -74,6 +77,7 @@ passport.use(new LocalStrategy(User.authenticate()));
 //tells how store user in session and how it remove from session
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
+
 
 //--------------------------------------------------------------------------------------------
 
