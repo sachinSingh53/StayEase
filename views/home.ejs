@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- <script src="https://cdn.tailwindcss.com"></script> -->
     <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous"> -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
     <link rel="stylesheet" href="/stylesheets/homePage.css">
@@ -23,8 +23,8 @@
             <div>
                 <h3 class="float-md-left mb-0">StayEase</h3>
                 <nav class="nav nav-masthead justify-content-center float-md-right">
-                    <a class="nav-link active" aria-current="page" href="#">Home</a>
-                    <!-- <a class="nav-link" href="/campgrounds">Campgrounds</a> -->
+                    <a class="nav-link active" aria-current="page" href="/">Home</a>
+                    <a class="nav-link " href="/houses/new">Add new</a>
                     <% if(!currentUser){ %>
                     <a class="nav-link" href="/login">Login</a>
                     <a class="nav-link" href="/register">Register</a>
@@ -69,7 +69,7 @@
         
            
         
-        <% if(formSubmitted){ %>
+        <!-- <% if(formSubmitted){ %>
         
             <% if(formSubmitted){ %>
                 <div class="max-w-6xl mx-auto mt-8">
@@ -128,7 +128,7 @@
                     
                 <% } %>
                 </div>
-        <% } %>
+        <% } %> -->
     
 
         <footer class="mt-auto text-white-50">

@@ -50,4 +50,6 @@ HouseSchema.post('findOneAndDelete',async function(doc){
     }
 })
 
+HouseSchema.index({ 'geometry': '2dsphere' });
+
 module.exports = mongoose.model('House',HouseSchema);

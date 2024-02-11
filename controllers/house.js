@@ -5,7 +5,7 @@ const {cloudinary} = require('../cloudinary');
 const mbxGeocoding= require('@mapbox/mapbox-sdk/services/geocoding');
 const mapboxToken = process.env.MAPBOX_TOKEN;
 const geocoder = mbxGeocoding({accessToken:mapboxToken});
-const client = require('../redisClient');
+// const client = require('../redisClient');
 
 
 
@@ -35,7 +35,7 @@ module.exports.create = async(req,res)=>{
 
     await house.save();
     req.flash('success','Successfully Created New House!');
-    res.redirect('/houses');
+    res.redirect(`/houses/${house._id}`);
 }
 
 module.exports.read = async(req,res)=>{
@@ -78,7 +78,7 @@ module.exports.delete = async(req,res)=>{
     }
     await House.findByIdAndDelete(id);
     req.flash('success','Sussessfully Deleted House!');
-    res.redirect('/houses',);
+    res.redirect('/',);
 }
 
 module.exports.addImages = async(req,res)=>{
@@ -116,36 +116,32 @@ module.exports.deleteImages = async(req,res)=>{
 
 module.exports.searchHouses = async(req,res)=>{
 
-    const cachedValue = client.get(req.body.location);
 
-    if(cachedValue){
-        res.render('home',{cachedValue,formSubmitted:true});
-    }
-    else{
-        const geodata =  await geocoder.forwardGeocode({
-            query:req.body.location,
-            limit:1
-        }).send();
+    const geodata =  await geocoder.forwardGeocode({
+        query:req.body.location,
+        limit:1
+    }).send();
 
-       const longitude =  geodata.body.features[0].geometry.coordinates[0];
-       const latitude = geodata.body.features[0].geometry.coordinates[1];
-        
+    const longitude =  geodata.body.features[0].geometry.coordinates[0];
+    const latitude = geodata.body.features[0].geometry.coordinates[1];
     
-        const houses = await House.aggregate([
-            {
-              $geoNear: {
-                near: { type: "Point", coordinates: [parseFloat(longitude),parseInt(latitude)] },
-                key: "geometry",
-                maxDistance: parseInt(50*1609), // Max distance in meters (assuming the distance is in miles)
-                distanceField: "dist.calculated",
-                spherical: true
-              }
-            }
-          ]);
 
-        await client.set(req.body.location,houses);
-        res.render('home',{houses,formSubmitted:true});
-    }
+    const houses = await House.aggregate([
+        {
+            $geoNear: {
+            near: { type: "Point", coordinates: [parseFloat(longitude),parseInt(latitude)] },
+            key: "geometry",
+            maxDistance: parseInt(50*1609), // Max distance in meters (assuming the distance is in miles)
+            distanceField: "dist.calculated",
+            spherical: true
+            }
+        }
+        ]);
+        const location = req.body.location;
+
+
+    res.render('house/searchHouses',{houses,location});
+
 
    
     // res.redirect('/houses');

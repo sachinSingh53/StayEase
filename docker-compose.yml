@@ -10,8 +10,8 @@ services:
     volumes:
       - mongo_db:/data/db
 
-  redis:
-    image: redis
+  # redis:
+  #   image: redis
     
     
     
@@ -30,7 +30,7 @@ services:
       GOOGLE_CLIENT_SECRET: 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
     depends_on:
       - mongo_db
-      - redis
+
       
 
 volumes:
