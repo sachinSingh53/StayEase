@@ -16,6 +16,7 @@ const User = require('./models/user');
 const houseRoutes = require('./routes/house');
 const reviewRoutes = require('./routes/review');
 const userRoutes = require('./routes/user');
+const os = require('os');
 
 //------------------------------mongoose Connection-------------------------------
 //change this url to local host url if you are using it outside the container of docker
@@ -47,6 +48,8 @@ app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname,'public')));
 //-------------------------------------------------------------------------------------
 
+//used because we are going to access our application through proxy (nginx)
+app.enable("trust proxy");
 
 //-------------------------session configuration------------------------------------------
 const sessionConfig = {
@@ -99,8 +102,20 @@ app.use('/houses',houseRoutes);
 app.use('/houses/:id/reviews',reviewRoutes);
 app.use('/',userRoutes);
 
+
 app.get('/',(req,res)=>{
+    console.log('sachin');
+    
     res.render('home',{formSubmitted: false});
+})
+
+app.get('/check',(req,res)=>{
+    console.log('sachin');
+    
+    res.json({
+        hi:"hi",
+        hostname: os.hostname()
+    })
 })
 
 app.all('*',(req,res,next)=>{

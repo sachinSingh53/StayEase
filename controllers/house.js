@@ -3,6 +3,8 @@ const {cloudinary} = require('../cloudinary');
 // const ExpressError = require('../utilities/expressError');
 // const Joi = require('joi');
 const mbxGeocoding= require('@mapbox/mapbox-sdk/services/geocoding');
+const { loginForm } = require('./user');
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
 const mapboxToken = process.env.MAPBOX_TOKEN;
 const geocoder = mbxGeocoding({accessToken:mapboxToken});
 // const client = require('../redisClient');
@@ -10,7 +12,9 @@ const geocoder = mbxGeocoding({accessToken:mapboxToken});
 
 
 module.exports.index = async(req,res)=>{
+
     const houses = await House.find({});
+
     res.render('house/index',{houses});
 }
 

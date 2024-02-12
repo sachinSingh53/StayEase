@@ -1,12 +1,16 @@
-FROM node:alpine
-WORKDIR /user/src/app
-
+FROM node:15
+WORKDIR /app
 COPY package*.json .
+# RUN npm install
 
-# to install node_modules
-RUN npm ci
+ARG NODE_ENV
 
-COPY . .
+RUN if [ "$NODE_ENV" = "development" ]; \
+        then npm install; \
+        else npm install --only=production; \
+        fi
 
-# CMD ["npm", "start"]
-CMD [ "npm", "run", "dev"]
+
+COPY . ./
+
+CMD [ "dev","npm","start" ]
