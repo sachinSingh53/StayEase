@@ -11,5 +11,11 @@ services:
         NODE_ENV: production
     environment:
       - NODE_ENV=production
+      - CLOUDINARY_CLOUD_NAME = ${CLOUDINARY_CLOUD_NAME}
+      - CLOUDINARY_KEY = ${CLOUDINARY_KEY}
+      - CLOUDINARY_SECRET = ${CLOUDINARY_SECRET}
+      - MAPBOX_TOKEN = ${MAPBOX_TOKEN}
+      - GOOGLE_CLIENT_ID = ${GOOGLE_CLIENT_ID}
+      - GOOGLE_CLIENT_SECRET = ${GOOGLE_CLIENT_SECRET}
 
     command: node app.js
