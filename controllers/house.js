@@ -64,7 +64,7 @@ module.exports.updateForm = async(req,res)=>{
 
 module.exports.update = async(req,res)=>{
     const {id} = req.params;
-    console.log(req.body);
+    // console.log(req.body);
     
     const houseEdit =  await House.findByIdAndUpdate(id,{...req.body.house});
     houseEdit.save();

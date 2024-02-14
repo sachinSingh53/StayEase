@@ -109,14 +109,14 @@ app.get('/',(req,res)=>{
     res.render('home',{formSubmitted: false});
 })
 
-app.get('/check',(req,res)=>{
-    console.log('sachin');
+// app.get('/check',(req,res)=>{
+//     console.log('sachin');
     
-    res.json({
-        hi:"hi",
-        hostname: os.hostname()
-    })
-})
+//     res.json({
+//         hi:"hi",
+//         hostname: os.hostname()
+//     })
+// })
 
 app.all('*',(req,res,next)=>{
     next(new ExpressError('Page Not Found',404));
