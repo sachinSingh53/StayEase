@@ -104,7 +104,7 @@ app.use('/',userRoutes);
 
 
 app.get('/',(req,res)=>{
-    console.log('sachin');
+    // console.log('sachin');
     
     res.render('home',{formSubmitted: false});
 })
