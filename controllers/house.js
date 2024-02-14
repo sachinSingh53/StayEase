@@ -5,7 +5,7 @@ const {cloudinary} = require('../cloudinary');
 const mbxGeocoding= require('@mapbox/mapbox-sdk/services/geocoding');
 const { loginForm } = require('./user');
 const { CloudinaryStorage } = require('multer-storage-cloudinary');
-const mapboxToken = process.env.MAPBOX_TOKEN;
+const mapboxToken = 'pk.eyJ1Ijoic2FjaGluNTMiLCJhIjoiY2xteDhycmIyMDd3MDJrcXkzcGhjbTBpcCJ9.mPeSSH07Ft3gwK59uwYjMA';
 const geocoder = mbxGeocoding({accessToken:mapboxToken});
 // const client = require('../redisClient');
 
