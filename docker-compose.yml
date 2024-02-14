@@ -22,7 +22,7 @@ services:
     
   api:
     build: .
-    image: sachinjss/stayease-image
+    # image: sachinjss/stayease-image
     environment:
       - PORT=3000
     
