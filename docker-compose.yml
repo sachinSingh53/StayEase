@@ -5,8 +5,8 @@ services:
     image: nginx:latest
     volumes:
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
-    links:
-      - api
+    # links:
+    #   - api
     
 
   mongo_db:
