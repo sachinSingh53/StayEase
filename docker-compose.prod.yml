@@ -4,6 +4,7 @@ services:
   nginx:
     ports:
       - "80:80"
+
   api:
     build: 
       context: .
@@ -18,6 +19,7 @@ services:
       - GOOGLE_CLIENT_ID = ${GOOGLE_CLIENT_ID}
       - GOOGLE_CLIENT_SECRET = ${GOOGLE_CLIENT_SECRET}
       - NODE_ENV=development
+      
       # - CLOUDINARY_CLOUD_NAME = dzp4ziyue
       # - CLOUDINARY_KEY = 491168893643126
       # - CLOUDINARY_SECRET = hWDslDG__M4kXuWOiyD6EEcT6Nc

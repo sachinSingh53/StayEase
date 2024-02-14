@@ -1,6 +1,4 @@
-if(process.env.NODE_ENV!=='production'){
-    require('dotenv').config();
-}
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const methodOverride = require('method-override');
@@ -104,7 +102,7 @@ app.use('/',userRoutes);
 
 
 app.get('/',(req,res)=>{
-    // console.log('sachin');
+    console.log('sachin');
     
     res.render('home',{formSubmitted: false});
 })
@@ -128,8 +126,8 @@ app.use((err,req,res,next)=>{
     if(!err.message) err.message="Oh No, Something Went Wrong";
     res.status(statusCode).render('error',{err});
 })
-
-app.listen(3000,()=>{
+const PORT = process.env.PORT;
+app.listen(PORT,()=>{
     console.log("Listining on port 3000");
 })
 
