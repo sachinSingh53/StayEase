@@ -8,9 +8,8 @@ StayEase is a community-based online platform for listing and renting local home
 - [Prerequisites](#prerequisites)
 - [Installation](#installation)
 - [Usage](#usage)
-- [Architecture](#architecture)
-- [API Endpoints](#api-endpoints)
-- [Testing](#testing)
+- [API Endpoints](#endpoints)
+
 
 ## Features
 - **User Authentication:** Secure sign-up and login system for both hosts and guests.
@@ -40,30 +39,41 @@ Before you begin, ensure you have met the following requirements:
 
 ## Usage
 
-
 1. The server will be running at http://localhost:3000
 
 2. Use API endpoints to interact with the application.
 
 
-## API Endpoints
+## Endpoints
 
-### Products
+### Frontend
 
-- **GET /**: to render the homepage
-- **POST /products**: Create a new product
-- **GET /products/:id**: Get a specific product by ID
-- **PUT /products/:id**: Update a product by ID
-- **DELETE /products/:id**: Delete a product by ID
-- **GET /products/search**: Search for products
+- **GET /**: HomePage
+- **GET /houses**: Render all houses/rooms (index)
+- **GET /houses/new**: Render a form to list house/rooms
+- **GET /houses/:id**: Render specific house by its ID
+- **GET /houses/:id/edit**: Render a form to edit house/rooms
+  
+<img width="1440" alt="Screenshot 2024-02-16 at 3 15 26 PM" src="https://github.com/sachinSingh53/StayEase/assets/96944676/de56aa44-813f-4586-9000-30b0fa22e5d5">
 
-## Architecture
-![Untitled Diagram drawio](https://github.com/sachinSingh53/mirror_backend_task/assets/96944676/f908020c-a93a-4b0b-9919-15f8a0685f1f)
+<img width="1438" alt="Screenshot 2024-02-16 at 3 43 47 PM" src="https://github.com/sachinSingh53/StayEase/assets/96944676/09db4548-8130-49f9-b44f-a0913f7af9ff">
+
+<img width="1438" alt="Screenshot 2024-02-16 at 3 32 37 PM" src="https://github.com/sachinSingh53/StayEase/assets/96944676/355526d3-f68f-4987-83a7-ae29198717ca">
+
+<img width="1439" alt="Screenshot 2024-02-16 at 3 34 16 PM" src="https://github.com/sachinSingh53/StayEase/assets/96944676/b584e5ed-5b03-401b-9075-2504092d6aa4">
+
+<img width="1439" alt="Screenshot 2024-02-16 at 3 35 12 PM" src="https://github.com/sachinSingh53/StayEase/assets/96944676/5ffac645-18d3-4977-9d9a-74b689a8931f">
+
+<img width="1437" alt="Screenshot 2024-02-16 at 3 35 25 PM" src="https://github.com/sachinSingh53/StayEase/assets/96944676/057e2cfc-0969-42dd-a0df-f58b4e4dc394">
+
+<img width="1437" alt="Screenshot 2024-02-16 at 3 38 38 PM" src="https://github.com/sachinSingh53/StayEase/assets/96944676/5cc03c28-d57b-4117-ba5a-b31b7d6f52d3">
 
 
-## Testing
+ ### Backend
 
-Run tests using Jest:
+- **POST /houses**: Create(list) a new house/rooms
+- **PUT /houses/:id**: Update a house/rooms
+- **DELETE /houses/:id**: Delete a specific house by its ID
+- **POST /findbylocation/search**: Search nearby houses/rooms
 
-```bash
-npm test
+
