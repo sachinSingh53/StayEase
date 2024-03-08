@@ -1,12 +1,21 @@
 version: '3.9'
 
 services:
+  # nginx:
+  #   image: nginx:latest
+  #   volumes:
+  #     - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+  #   # links:
+  #   #   - api
   nginx:
+    container_name: ms_nginx
     image: nginx:latest
-    volumes:
-      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
-    # links:
-    #   - api
+    # volumes:
+    #   - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - api
+    ports:
+      - '80:80'
     
 
   mongo_db:
@@ -25,6 +34,8 @@ services:
     # image: sachinjss/stayease-api
     environment:
       - PORT=3000
+    ports:
+      - 3000:3000
     
     depends_on:
       - mongo_db
