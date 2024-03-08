@@ -101,7 +101,7 @@ app.use('/houses/:id/reviews',reviewRoutes);
 app.use('/',userRoutes);
 
 
-app.get('/',(req,res)=>{
+app.get('/home',(req,res)=>{
     // console.log('sachin');
     
     res.render('home',{formSubmitted: false});
