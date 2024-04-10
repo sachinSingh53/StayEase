@@ -18,13 +18,13 @@ const os = require('os');
 
 //------------------------------mongoose Connection-------------------------------
 //change this url to local host url if you are using it outside the container of docker
-mongoose.connect('mongodb://mongo_db:27017/StayEase',{
+// 'mongodb://mongo_db:27017/StayEase'
+const DB_URL = 'mongodb+srv://sachin_53:68sXWPJfQ4iHkXg6@cluster0.nvfkv8t.mongodb.net/?retryWrites=true&w=majority'
+mongoose.connect(DB_URL,{
     // useNewUrlParser: true,
     // // useCreateIndex:true,
     // useUnifiedTopology:true
 });
-
-
 
 const db = mongoose.connection;
 db.on("error",console.error.bind(console,"connection error:"));
