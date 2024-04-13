@@ -1,6 +1,7 @@
 # StayEase
 
 StayEase is a community-based online platform for listing and renting local homes. It connects hosts and travelers and facilitates the process of renting without owning any rooms itself. Moreover it cultivates a sharing-economy by allowing property owners to rent out private flats.
+[Visit StayEase](https://stay-ease-six.vercel.app/home)
 
 ## Table of Contents
 
