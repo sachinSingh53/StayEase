@@ -6,6 +6,7 @@ const storage = require('../cloudinary/index');
 const { validateHouse, isLoggedIn, isAuthor } = require('../middlewares');
 const upload = multer(storage);
 const houseController = require('../controllers/house');
+const {createOrder} = require('../controllers/payment');
 
 
 
@@ -30,6 +31,8 @@ router.put('/:id/addImages',isLoggedIn,isAuthor,upload.array('images'),catchAsyn
 router.delete('/:id/deleteImages',isLoggedIn,isAuthor,catchAsync(houseController.deleteImages));
 
 router.post('/findbylocation',catchAsync(houseController.searchHouses));
+
+router.get('/:id/payment',catchAsync(createOrder));
 
 
 

@@ -1,237 +1,298 @@
- <% layout('layout/boilerplate') %>
+<% layout('layout/boilerplate') %>
 
-  <link rel="stylesheet" href="/stylesheets/showPage.css"> 
-  <link rel="stylesheet" href="/stylesheets/stars.css"> 
-  
- <section id="services" class="services section-bg">
-  <div class="container-fluid">
-     <div class="row row-sm">
+  <link rel="stylesheet" href="/stylesheets/showPage.css">
+  <link rel="stylesheet" href="/stylesheets/stars.css">
+
+  <section id="services" class="services section-bg">
+    <div class="container-fluid">
+      <div class="row row-sm">
         <div class="col-md-6">
 
           <div id="carouselExample" class="carousel slide">
             <div class="carousel-inner">
               <% house.images.forEach((img,i)=>{ %>
-              <div class="carousel-item <%= i===0 ? 'active' : '' %> mb-3">
-                <img src="<%= img.url %>"  class="d-block w-100 " style="max-height: 500px;" alt="">
-              </div>
-              <% }) %>
-              
+                <div class="carousel-item <%= i===0 ? 'active' : '' %> mb-3">
+                  <img src="<%= img.url %>" class="d-block w-100 " style="max-height: 500px;" alt="">
+                </div>
+                <% }) %>
+
             </div>
-            <% if(house.images.length > 1) {%>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-              <span class="carousel-control-next-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Next</span>
-            </button>
-            <% } %>
+            <% if(house.images.length> 1) {%>
+              <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample"
+                data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#carouselExample"
+                data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+              </button>
+              <% } %>
           </div>
-           
+
         </div>
         <div class="col-md-6">
-           <div class="_product-detail-content">            
+          <div class="_product-detail-content">
             <% if(currentUser&&house.author.equals(currentUser)){ %>
-            <form class="d-flex justify-content-end" action="/houses/<%= house.id %>?_method=delete" method="POST">
-              <button class="btn btn-outline-danger btn-sm">X</button>
-            </form>
-            <% } %>
-            
-           
-              <p class="_p-name"> <%= house.name %> </p>
-              
-              
-              
-              <div class="_p-price-box">
-                 <div class="p-list">
+              <form class="d-flex justify-content-end" action="/houses/<%= house.id %>?_method=delete" method="POST">
+                <button class="btn btn-outline-danger btn-sm">X</button>
+              </form>
+              <% } %>
+
+
+                <p class="_p-name">
+                  <%= house.name %>
+                </p>
+
+
+
+                <div class="_p-price-box">
+                  <div class="p-list">
 
                     <span class="price"> Rs. <%= house.price%>/day </span>
-                 </div>
-                 <% if(house.availability>0){ %>
+                  </div>
+                  <% if(house.availability>0){ %>
                     <span class="text-primary">Available <%=house.availability%> rooms</span>
-                  <% }else{ %>
-                    <span class="text-danger">Not Available</span>
-                    <% } %>
-                 
-                 <div class="_p-features mb-3">
-                    <span> Description</span>
-                    <%= house.description %>  
-                 </div>
-                 <button class="btn btn-success">Book Now</button>
-                 <% if(currentUser&&house.author.equals(currentUser)){ %>
-                  <a href="/houses/<%=house.id%>/edit"><button class="btn btn-primary">Edit</button></a>
+                    <% }else{ %>
+                      <span class="text-danger">Not Available</span>
+                      <% } %>
+
+                        <div class="_p-features mb-3">
+                          <span> Description</span>
+                          <%= house.description %>
+                        </div>
+                        <a href="/houses/<%=house.id%>/payment"><button class="btn btn-success" id="bookBtn">Book
+                            Now</button></a>
+                        <% if(currentUser&&house.author.equals(currentUser)){ %>
+                          <a href="/houses/<%=house.id%>/edit"><button class="btn btn-primary">Edit</button></a>
+
+                          <!------------------------------------ upload more photos ---------------------------------->
+                          <button class="btn btn-primary" onclick="toggleUpload()">Images</button>
+                          <div class="upload-container" id="uploadContainer">
+                            <span class="close-btn" onclick="toggleUpload()">&times;</span>
+
+                            <h5>Upload Photos</h5>
+
+                            <form id="uploadForm" action="/houses/<%= house.id %>/addImages?_method=put" method="POST"
+                              enctype="multipart/form-data">
+                              <div class="form-group">
+                                <label for="fileInput" class="custom-file-upload btn btn-primary mb-3">
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="16" fill="currentColor"
+                                    class="bi bi-upload" viewBox="0 0 16 16">
+                                    <path
+                                      d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5" />
+                                    <path
+                                      d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708z" />
+                                  </svg>
+                                </label>
+                                <input type="file" name="images" id="fileInput" multiple accept="image/*" class="d-none"
+                                  onchange="displaySelectedFiles(event)" required>
+                              </div>
+
+                              <div id="selectedFiles" class="selected-files mb-3"></div>
+                              <button class="btn btn-success ">Upload</button>
+                            </form>
+
+                            <!------------------------------------ Delete photos ------------------------------------------>
+                            <hr>
+                            <h5>Delete Photos</h5>
+                            <form id="uploadForm" action="/houses/<%= house.id %>/deleteImages?_method=delete"
+                              method="POST">
+                              <% house.images.forEach((img,i)=>{ %>
+                                <label for="image-<%=i%>">
+                                  <input type="checkbox" id="image-<%=i%>" name="deleteImages[]"
+                                    value="<%=img.filename%>">
+                                  <img src="<%= img.url %>" class="img-thumbnail"
+                                    style="max-height: 100px; max-width: 200px;" alt="" id="image-<%=i%>">
+                                </label>
+                                <% }) %>
+                                  <button class="btn btn-danger mt-3">Delete</button>
+                            </form>
+                          </div>
+                          <% } %>
+                </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Review -->
+  <section class="sec bg-light">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-12 title_bx">
+          <h3 class="title"> Reviews</h3>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 list-slider mt-4">
+          <div class="owl-carousel common_wd owl-theme" id="recent_post">
+            <div class="item">
+              <div class="sq_box shadow">
+
+                <h3>Leave a review</h3>
+                <form action="/houses/<%=house._id%>/reviews" method="post" class="mb-3 needs-validation" novalidate>
+                  <fieldset class="starability-heartbeat " style="margin: 0 auto;">
+                    <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value="0" checked
+                      aria-label="No rating." />
+                    <input type="radio" id="first-rate1" name="review[rating]" value="1" />
+                    <label for="first-rate1" title="Terrible">1 star</label>
+                    <input type="radio" id="first-rate2" name="review[rating]" value="2" />
+                    <label for="first-rate2" title="Not good">2 stars</label>
+                    <input type="radio" id="first-rate3" name="review[rating]" value="3" />
+                    <label for="first-rate3" title="Average">3 stars</label>
+                    <input type="radio" id="first-rate4" name="review[rating]" value="4" />
+                    <label for="first-rate4" title="Very good">4 stars</label>
+                    <input type="radio" id="first-rate5" name="review[rating]" value="5" />
+                    <label for="first-rate5" title="Amazing">5 stars</label>
+                  </fieldset>
+
+                  <div class="mb-3">
+                    <label class="form-label" for="body"></label>
+
+                    <textarea class="form-control" name="review[body]" id="body" cols="30" rows="5" required></textarea>
+
+
+
+                  </div>
+
+                  <button class="btn btn-primary">Submit</button>
+                </form>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <!--            Review Display           -->
+
+        <div class="col-md-6 list-slider mt-4">
+          <div class="owl-carousel common_wd owl-theme" id="recent_post">
+            <div class="item">
+              <div class="sq_box shadow scrollable-div">
+                <% for (let review of house.reviews){ %>
+
+
+                  <div class="card mb-3">
+                    <div class=" card-body">
 
 
 
 
+                      <p class="starability-result card-text mb-3 " data-rating="<%= review.rating %>">
+                      </p>
 
-                  <!------------------------------------ upload more photos ---------------------------------->
-                  <button class="btn btn-primary" onclick="toggleUpload()">Images</button>
-                  <div class="upload-container" id="uploadContainer">
-                    <span class="close-btn" onclick="toggleUpload()">&times;</span>
-                    
-                    <h5>Upload Photos</h5>
 
-                    <form id="uploadForm" action="/houses/<%= house.id %>/addImages?_method=put" method="POST"  enctype="multipart/form-data">
-                      <div class="form-group">
-                        <label for="fileInput" class="custom-file-upload btn btn-primary mb-3">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="16" fill="currentColor" class="bi bi-upload" viewBox="0 0 16 16">
-                            <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5"/>
-                            <path d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708z"/>
-                          </svg>
-                        </label>
-                        <input type="file" name="images" id="fileInput" multiple accept="image/*" class="d-none" onchange="displaySelectedFiles(event)" required>
-                      </div>
-                      
-                      <div id="selectedFiles" class="selected-files mb-3"></div>
-                      <button class="btn btn-success " >Upload</button>
-                    </form>
 
-                    <!------------------------------------ Delete photos ------------------------------------------>
-                    <hr>
-                  <h5>Delete Photos</h5>
-                    <form id="uploadForm" action="/houses/<%= house.id %>/deleteImages?_method=delete" method="POST"   >
-                      <% house.images.forEach((img,i)=>{ %>
-                        <label for="image-<%=i%>">
-                          <input type="checkbox" id="image-<%=i%>" name="deleteImages[]" value="<%=img.filename%>">
-                          <img  src="<%= img.url %>" class="img-thumbnail" style="max-height: 100px; max-width: 200px;"alt="" id="image-<%=i%>">
-                        </label> 
-                      <% }) %>
-                      <button class="btn btn-danger mt-3" >Delete</button>
-                    </form>
+
+                      <p class="card-text">
+                        <%= review.body %>
+                      </p>
+                      <h5>
+                        <footer class="blockquote-footer">
+                          <%= review.author.username %>
+                        </footer>
+                        </h6>
+
+                        <% if(currentUser&&review.author.equals(currentUser)){ %>
+                          <form class="d-flex justify-content-end"
+                            action="/houses/<%=house._id%>/reviews/<%= review._id %>?_method=delete" method="post">
+                            <button class="btn btn-danger btn-sm">Delete</button>
+                          </form>
+                          <% } %>
+
+                    </div>
+
+
                   </div>
                   <% } %>
               </div>
-           </div>
-        </div>
-     </div>
-  </div>
-</section>
-
-<!-- Review -->
-<section class="sec bg-light">
-  <div class="container">
-    <div class="row">
-      <div class="col-sm-12 title_bx">
-        <h3 class="title"> Reviews</h3>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-6 list-slider mt-4">
-        <div class="owl-carousel common_wd owl-theme" id="recent_post">
-          <div class="item">
-            <div class="sq_box shadow">
-              
-              <h3 >Leave a review</h3> 
-              <form  action="/houses/<%=house._id%>/reviews" method="post" class="mb-3 needs-validation" novalidate>
-                <fieldset class="starability-heartbeat " style="margin: 0 auto;">
-                  <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value="0" checked aria-label="No rating." />
-                  <input type="radio" id="first-rate1" name="review[rating]" value="1" />
-                  <label for="first-rate1" title="Terrible">1 star</label>
-                  <input type="radio" id="first-rate2" name="review[rating]" value="2" />
-                  <label for="first-rate2" title="Not good">2 stars</label>
-                  <input type="radio" id="first-rate3" name="review[rating]" value="3" />
-                  <label for="first-rate3" title="Average">3 stars</label>
-                  <input type="radio" id="first-rate4" name="review[rating]" value="4" />
-                  <label for="first-rate4" title="Very good">4 stars</label>
-                  <input type="radio" id="first-rate5" name="review[rating]" value="5" />
-                  <label for="first-rate5" title="Amazing">5 stars</label>
-                </fieldset>
-
-                <div class="mb-3">
-                  <label class="form-label" for="body"></label>
-                  
-                  <textarea  class="form-control" name="review[body]" id="body" cols="30" rows="5" required></textarea>
-                  
-                 
-    
-                </div>
-                
-                <button class="btn btn-primary">Submit</button>
-              </form>
-              
-            </div>
-          </div>
-        </div>
-      </div>
-
-
-      <!--            Review Display           -->
-
-      <div  class="col-md-6 list-slider mt-4" >
-        <div class="owl-carousel common_wd owl-theme" id="recent_post">
-          <div class="item">
-            <div class="sq_box shadow scrollable-div">
-              <% for (let review of house.reviews){ %>
-                
-
-                <div class="card mb-3">
-                  <div class=" card-body">
-                    
-                    
-
-                   
-                    <p class="starability-result card-text mb-3 " data-rating="<%= review.rating %>">
-                    </p>
-                    
-
-                   
-                    
-                    <p class="card-text"> <%= review.body %> </p>
-                    <h5><footer class="blockquote-footer"><%= review.author.username %></footer></h6> 
-    
-                    <% if(currentUser&&review.author.equals(currentUser)){ %>
-                      <form class="d-flex justify-content-end" action="/houses/<%=house._id%>/reviews/<%= review._id %>?_method=delete" method="post">
-                        <button class="btn btn-danger btn-sm">Delete</button>
-                      </form>
-                    <% } %>
-                 
-                  </div>
-                
-                
-                </div>
-              <% } %>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<script>
-  function displaySelectedFiles(event) {
-    const fileInput = event.target;
-    const selectedFilesDiv = document.getElementById('selectedFiles');
-    selectedFilesDiv.innerHTML = '';
+  <script>
+    function displaySelectedFiles(event) {
+      const fileInput = event.target;
+      const selectedFilesDiv = document.getElementById('selectedFiles');
+      selectedFilesDiv.innerHTML = '';
 
-    for (let i = 0; i < fileInput.files.length; i++) {
-      const file = fileInput.files[i];
-      const reader = new FileReader();
+      for (let i = 0; i < fileInput.files.length; i++) {
+        const file = fileInput.files[i];
+        const reader = new FileReader();
 
-      reader.onload = function(e) {
-        const img = document.createElement('img');
-        img.src = e.target.result;
-        selectedFilesDiv.appendChild(img);
-      };
+        reader.onload = function (e) {
+          const img = document.createElement('img');
+          img.src = e.target.result;
+          selectedFilesDiv.appendChild(img);
+        };
 
-      reader.readAsDataURL(file);
+        reader.readAsDataURL(file);
+      }
     }
-  }
-  function toggleUpload() {
-    const uploadContainer = document.getElementById('uploadContainer');
-    uploadContainer.style.display = (uploadContainer.style.display === 'block') ? 'none' : 'block';
-  }
-</script>
+    function toggleUpload() {
+      const uploadContainer = document.getElementById('uploadContainer');
+      uploadContainer.style.display = (uploadContainer.style.display === 'block') ? 'none' : 'block';
+    }
+  </script>
+
+  <script src="/javascripts/showPage"></script>
+  <script src="/javascripts/formValidationBootstrap.js"></script>
 
 
-<script src="/javascripts/showPage"></script>
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
 
+  <script>
+    document.getElementById('bookBtn').onclick = async function (e) {
+      e.preventDefault();
 
-<script src="/javascripts/formValidationBootstrap.js"></script>
+      let id = "<%= house.id %>";
 
+      // Show loading
+      document.getElementById('bookBtn').innerHTML = 'Loading...';
+      document.getElementById('bookBtn').disabled = true;
 
- 
+      let response = await fetch(`/houses/${id}/payment`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        }
+      });
+      let flag = false;
+      if (response.redirected && response.url.includes('/login')) {
+        flag = true;
+        window.location.href = response.url;
+      }
+      if(flag){
+        response = await fetch(`/houses/${id}/payment`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        }
+      });
+      }
+      const orderData = await response.json();
 
+      document.getElementById('bookBtn').innerHTML = 'Book Now';
+      document.getElementById('bookBtn').disabled = false;
+
+      let options = {
+        key: orderData.key_id,
+        amount: orderData.amount,
+        currency: "INR",
+        order_id: orderData.order_id,
+        handler: function (response) {
+          alert('Your payment ID: ' + response.razorpay_payment_id + '\nYour order ID: ' + response.razorpay_order_id + '\nYour razorpay_signature: ' + response.razorpay_signature);
+        }
+      };
+      var rzp1 = new Razorpay(options);
+      rzp1.open();
+    };
+  </script>

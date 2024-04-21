@@ -14,6 +14,7 @@ const User = require('./models/user');
 const houseRoutes = require('./routes/house');
 const reviewRoutes = require('./routes/review');
 const userRoutes = require('./routes/user');
+const cors = require('cors')
 const os = require('os');
 
 //------------------------------mongoose Connection-------------------------------
@@ -42,6 +43,7 @@ app.engine('ejs',ejsMate);
 app.set('view engine','ejs');
 app.set('views',path.join(__dirname,'views'));
 app.use(express.urlencoded({extended:true}));
+app.use(cors());
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname,'public')));
 //-------------------------------------------------------------------------------------
