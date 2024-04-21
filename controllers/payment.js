@@ -8,6 +8,8 @@ const createOrder = async (req, res) => {
 
     const house = await House.findById(req.params.id).populate('author');
 
+    //payment
+
 
     const options = {
         amount: house.price*100,
